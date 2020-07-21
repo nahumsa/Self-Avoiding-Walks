@@ -93,7 +93,7 @@ class SAW():
 
   @property
   def trial_probability(self):
-    """ Return the log of possible walks.
+    """ Return the trial probability function.
 
     """
     g = (1/np.array(self.k)).cumprod()
@@ -250,6 +250,14 @@ class SAWEarly(SAW):
     self.terminate_probability = terminate_probability
     super(SAWEarly, self).__init__(N,initial_x,initial_y)
         
+
+  @property
+  def trial_probability(self):
+    """ Return the trial probability function.
+
+    """
+    g = (1/np.array(self.k)).cumprod()
+    return g[-1]*(1 - self.terminate_probability)**self.n_walks
 
   def _evolution(self, plot=False, debug=False):
     """ Makes the evolution of the SAW.
